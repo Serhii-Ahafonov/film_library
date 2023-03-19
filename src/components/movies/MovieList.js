@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import MovieItem from './MovieItem';
 import classes from './MovieList.module.css';
+import MovieFiltering from './MovieFiltering';
 
 const sortMovies = (movies, ascending) => {
   return movies.slice().sort((movieA, movieB) => {
@@ -14,35 +15,51 @@ const sortMovies = (movies, ascending) => {
 };
 
 const MovieList = (props) => {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
   const history = useHistory();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
-
   const isSortingAscending = queryParams.get('sort') === 'asc';
-  const sortedMovies = sortMovies(props.movies, isSortingAscending);
+
+  useEffect(() => {
+    const sortedMovies = sortMovies(props.movies, isSortingAscending);
+    setResults(sortedMovies)
+  },[props.movies])
 
   const changeSortingHandler = () => {
     history.push({
       pathname: location.pathname,
       search: `?sort=${(isSortingAscending ? 'desc': 'asc')}`
     });
+    setResults(sortMovies(props.movies, isSortingAscending));
+  };
+
+  const onSearchChange = (value) => {
+    const query = value.toLowerCase();
+    setTimeout(() => {
+      const filteredMovies = props.movies.filter(movie => {
+        const titleMatch = movie.title.toLowerCase().includes(query);
+        const actorMatch = movie.actors.some(actor => actor.toLowerCase().includes(query));
+        return titleMatch || actorMatch;
+      });
+      setResults(filteredMovies);
+    }, 600);
+    setQuery(query);
   };
 
   return (
     <Fragment>
-      <div className={classes.sorting}>
-        <button onClick={changeSortingHandler}>
-          Sort {isSortingAscending ? 'Descending' : 'Ascending'}
-        </button>
-      </div>
+      <MovieFiltering
+        isSortingAscending={isSortingAscending}
+        onChange={changeSortingHandler}
+        onSearch={onSearchChange}
+        query={query}
+      />
       <ul className={classes.list}>
-        {sortedMovies.map((movie) => (
-          <MovieItem
-            key={movie.id}
-            id={movie.id}
-            title={movie.title}
-          />
+        {results.map((movie) => (
+          <MovieItem key={movie.id} id={movie.id} title={movie.title}/>
         ))}
       </ul>
     </Fragment>

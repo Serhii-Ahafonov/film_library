@@ -1,9 +1,3 @@
-.container {
-    background-color: #272727;
-    border-radius: 12px;
-    padding: 1.5rem;
-}
-
 .control {
     margin-bottom: 0.5rem;
 }
@@ -25,12 +19,13 @@
     display: block;
     width: 100%;
     font-size: 1.25rem;
+    resize: none;
 }
 
 .control input:focus,
 .control textarea:focus {
-    background-color: #cbf8f8;
-    outline-color: teal;
+    background-color: #ffeaea;
+    outline-color: #2a1313;
 }
 
 .actions {

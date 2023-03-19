@@ -2,10 +2,6 @@
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.sorting {
-  padding-bottom: 1rem;
-  border-bottom: 3px solid white;
-  margin-bottom: 2rem;
+  overflow: scroll;
+  max-height: 800px;
 }

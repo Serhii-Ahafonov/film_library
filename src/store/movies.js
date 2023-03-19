@@ -10,12 +10,25 @@ const moviesSlice = createSlice({
       const newMovie = action.payload;
 
       state.movies.push({
-        id: newMovie.id,
+        id: 'movie-' + (Math.random() * 100000).toFixed(),
         title: newMovie.title,
-        releaseYear: newMovie.releaseYear,
+        year: newMovie.year,
         format: newMovie.format,
-        stars: newMovie.stars
+        actors: newMovie.actors
       });
+    },
+    addMovies: (state, action) => {
+      const newMovies = action.payload;
+
+      newMovies.map(movie => {
+        state.movies.push({
+          id: 'movie-' + (Math.random() * 100000).toFixed(),
+          title: movie.title,
+          year: movie.year,
+          format: movie.format,
+          actors: movie.actors
+        });
+      })
     },
     removeMovie: (state, action) => {
       const id = action.payload;
@@ -25,5 +38,6 @@ const moviesSlice = createSlice({
 });
 
 export const addMovie = moviesSlice.actions.addMovie;
+export const addMovies = moviesSlice.actions.addMovies;
 export const removeMovie = moviesSlice.actions.removeMovie;
 export default moviesSlice.reducer;

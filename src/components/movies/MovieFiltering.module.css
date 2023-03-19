@@ -1,0 +1,39 @@
+.sorting {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid white;
+  margin-bottom: 2rem;
+  color: white;
+  gap: 24px
+}
+
+.input {
+  position: relative;
+}
+
+.input input {
+  font: inherit;
+  padding: 0.35rem 2rem 0.35rem 0.35rem;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  border: 1px solid #c1d1d1;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.input input:focus {
+  outline-color: #100707;
+}
+
+.icon {
+  position: absolute;
+  color: black;
+  z-index: 100;
+  top: 0;
+  right: 5px;
+  font-size: 24px;
+}

@@ -1,0 +1,20 @@
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+}
+
+.section {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    gap: 12px;
+}
+
+.section label {
+    font-style: initial;
+}
+
+.section div {
+    font-weight: bold;
+}

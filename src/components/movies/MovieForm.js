@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import classes from './MovieForm.module.css';
+import Card from '../UI/Card';
 
 function MovieForm(props) {
   const titleRef = useRef(null);
-  const releaseYearRef = useRef(null);
+  const yearRef = useRef(null);
   const formatRef = useRef(null);
-  const starsRef = useRef(null);
+  const actorsRef = useRef(null);
 
   function submitHandler(event) {
     event.preventDefault();
@@ -13,18 +14,17 @@ function MovieForm(props) {
     // could add validation here...
 
     const movie = {
-      id: Math.random(),
       title: titleRef.current.value,
-      releaseYear: releaseYearRef.current.value,
+      year: yearRef.current.value,
       format: formatRef.current.value,
-      stars: starsRef.current.value,
+      actors: actorsRef.current.value.split(','),
     };
 
     props.onAddMovie(movie);
   }
 
   return (
-    <div className={classes.container}>
+    <Card>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor='title'>Title</label>
@@ -32,21 +32,21 @@ function MovieForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor='release'>Release Year</label>
-          <input type='text' id='release' ref={releaseYearRef}/>
+          <input type='text' id='release' ref={yearRef}/>
         </div>
         <div className={classes.control}>
           <label htmlFor='format'>Format</label>
           <input type='text' id='format' ref={formatRef}/>
         </div>
         <div className={classes.control}>
-          <label htmlFor='stars'>Stars</label>
-          <textarea rows='2' id='stars' ref={starsRef}/>
+          <label htmlFor='actors'>Stars</label>
+          <textarea rows='2' id='actors' ref={actorsRef}/>
         </div>
         <div className={classes.actions}>
           <button>Add Movie</button>
         </div>
       </form>
-    </div>
+    </Card>
   );
 }
 
