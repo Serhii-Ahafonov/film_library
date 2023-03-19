@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)),
+        url('../../assets/movies-background.jpg');
+    background-size: cover;
+}
+
+.content {
+    margin: 3rem auto;
+    width: 90%;
+    max-width: 40rem;
+}

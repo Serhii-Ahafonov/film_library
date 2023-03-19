@@ -1,13 +1,13 @@
 import React from 'react';
 import MainNavigation from './MainNavigation';
-import { MainPageContainer, MainPageContent } from '../../styles/styled-components/MainPage';
+import classes from './MainPage.module.css';
 
 const MainPage = (props) => {
   return (
-    <MainPageContainer>
+    <div className={classes.container}>
       <MainNavigation/>
-      <MainPageContent>{props.children}</MainPageContent>
-    </MainPageContainer>
+      <div className={classes.content}>{props.children}</div>
+    </div>
   );
 };
 
