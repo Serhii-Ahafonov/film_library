@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/Main.css';
+import './index.css';
 import '../public/favicon.ico'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import MainPage from './components/layout/MainPage';
