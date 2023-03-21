@@ -1,4 +1,4 @@
-.control {
+.control, .form {
     margin-bottom: 0.5rem;
 }
 
@@ -30,4 +30,22 @@
 
 .actions {
     text-align: right;
+}
+
+.import {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.import input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.import label {
+    padding: 0 8px ;
+    color: white;
+    border-bottom: 2px solid white;
+    cursor: pointer;
 }

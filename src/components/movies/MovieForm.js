@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 import classes from './MovieForm.module.css';
 import Card from '../UI/Card';
 
-function MovieForm(props) {
+function MovieForm({ onAddMovie, onImport }) {
   const titleRef = useRef(null);
   const yearRef = useRef(null);
   const formatRef = useRef(null);
   const actorsRef = useRef(null);
 
-  function submitHandler(event) {
+  function addHandler(event) {
     event.preventDefault();
 
     // could add validation here...
@@ -20,12 +20,20 @@ function MovieForm(props) {
       actors: actorsRef.current.value.split(','),
     };
 
-    props.onAddMovie(movie);
+    onAddMovie(movie);
+  }
+
+  function importHandler(event) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("movies", file, file.name);
+
+    onImport(formData);
   }
 
   return (
     <Card>
-      <form onSubmit={submitHandler}>
+      <form className={classes.form} onSubmit={addHandler}>
         <div className={classes.control}>
           <label htmlFor='title'>Title</label>
           <input type='text' id='title' ref={titleRef}/>
@@ -39,13 +47,23 @@ function MovieForm(props) {
           <input type='text' id='format' ref={formatRef}/>
         </div>
         <div className={classes.control}>
-          <label htmlFor='actors'>Stars</label>
+          <label htmlFor='actors'>Actors</label>
           <textarea rows='2' id='actors' ref={actorsRef}/>
         </div>
         <div className={classes.actions}>
           <button>Add Movie</button>
         </div>
       </form>
+      <div className={classes.import}>
+        <label htmlFor="upload-movies">Import Movies...</label>
+        <input
+          id="upload-movies"
+          name="movies"
+          type="file"
+          accept=".txt"
+          onChange={importHandler}
+        />
+      </div>
     </Card>
   );
 }

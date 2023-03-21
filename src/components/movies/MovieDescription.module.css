@@ -18,3 +18,7 @@
 .section div {
     font-weight: bold;
 }
+
+.section li {
+    list-style: none;
+}

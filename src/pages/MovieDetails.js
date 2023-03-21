@@ -1,16 +1,35 @@
-import React from 'react';
-import MovieDescription from '../components/movies/MovieDescription';
+import React, { useLayoutEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { fetchMovies } from '../api/moviesApi';
+
+import MovieDescription from '../components/movies/MovieDescription';
+import LoadingSpinner from '../components/UI/LoadingSpinner';
 
 function MovieDetails() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [movie, setMovie] = useState({})
   const params = useParams();
   const { movieId } = params;
-  const movies = useSelector((state) => state.allMovies.movies);
-  const currentMovie = movies.filter(movie => movie.id === movieId);
+
+  useLayoutEffect(() => {
+    setIsLoading(true);
+    const fetchMovieDescription = async () => {
+      try {
+        const data = await fetchMovies(`/${movieId}`);
+        setMovie(data);
+      } catch (e) {
+        console.log(e);
+      }
+      setIsLoading(false);
+    }
+
+    fetchMovieDescription();
+  }, [])
+
+  if (isLoading) return <LoadingSpinner/>;
 
   return (
-    currentMovie.length && <MovieDescription movie={currentMovie}/>
+    <MovieDescription {...movie}/>
   );
 }
 
