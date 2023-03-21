@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import '../public/favicon.ico'
 import App from './App';
 
 const rootElement = ReactDOM.createRoot(document.getElementById('app-root'));

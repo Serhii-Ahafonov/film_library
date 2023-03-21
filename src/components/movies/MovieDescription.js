@@ -19,7 +19,7 @@ const MovieDescription = ({title, year, format, actors}) => {
           <label htmlFor='actorsDetail'>Actors: </label>
           <ul>
             {actors.map(actor => (
-              <li>{actor.name}</li>
+              <li key={actor.id}>{actor.name}</li>
             ))}
           </ul>
         </div>
