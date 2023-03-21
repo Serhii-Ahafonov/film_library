@@ -16,26 +16,31 @@ export function fetchMovies(params) {
         }
       })
 
-      if (response.error) {
-        throw new Error(`Could not fetch movies ${response.error.code}.`)
+      if (!response.ok) {
+        throw new Error(`Could not fetch data - please try again later!`)
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(JSON.stringify(data.error))
+      }
+
+      return data;
     }
 
     try {
       const { data } = await fetchData();
       dispatch(replaceMovies(data));
     } catch (error) {
-      console.log(error);
-      // dispatch(uiActions.showNotification({status: 'error', title: 'Error...', message: 'Fetching cart data failed.'}))
+      const errorObject = JSON.parse(error.message);
+      if (errorObject.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
     }
   };
 }
 
 export function sendMovies(movies) {
   return async dispatch => {
-    // dispatch(setLoading(true));
     const sendData = async () => {
       const response = await fetch(url, {
         method: 'POST',
@@ -50,18 +55,21 @@ export function sendMovies(movies) {
         throw new Error(`Could not save data - please try again later!`)
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(JSON.stringify(data.error))
+      }
+
+      return data;
     }
 
     try {
-      const { data, error } = await sendData();
-      console.log(data, !error)
-      !error ? dispatch(addMovies(data)) : dispatch(setError(error.code));
-      return error;
+      const { data } = await sendData();
+      dispatch(addMovies(data));
     } catch (error) {
-      console.log(error);
-
-      // dispatch(uiActions.showNotification({status: 'error', title: 'Error...', message: 'Fetching cart data failed.'}))
+      const errorObject = JSON.parse(error.message);
+      if (errorObject.code === 'FORMAT_ERROR') dispatch(setError(errorObject.fields));
     }
   };
 }
@@ -77,19 +85,25 @@ export function deleteMovie(id) {
         }
       })
 
-      if (response.error) {
-        throw new Error(`Could not delete movie (${response.error.code}) - please try again later!`)
+      if (!response.ok) {
+        throw new Error(`Could not delete data - please try again later!`)
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(JSON.stringify(data.error))
+      }
+
+      return data;
     }
 
     try {
       await sendData();
       dispatch(removeMovie(id));
     } catch (error) {
-      console.log(error);
-      // dispatch(uiActions.showNotification({status: 'error', title: 'Error...', message: 'Fetching cart data failed.'}))
+      const errorObject = JSON.parse(error.message);
+      if (errorObject.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
     }
   };
 }
@@ -106,8 +120,8 @@ export function sendImportMovies(formData) {
         }
       })
 
-      if (response.error) {
-        throw new Error(`Could not save data (${response.error.code}) - please try again later!`)
+      if (!response.ok) {
+        throw new Error(`Could not import movies - please try again later!`)
       }
 
       return await response.json();
@@ -117,8 +131,7 @@ export function sendImportMovies(formData) {
       const { data } = await sendData();
       dispatch(importMovies(data));
     } catch (error) {
-      console.log(error);
-      // dispatch(uiActions.showNotification({status: 'error', title: 'Error...', message: 'Fetching cart data failed.'}))
+      dispatch(setError({message: error.message}));
     }
   };
 }

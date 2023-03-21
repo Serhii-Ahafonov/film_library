@@ -17,22 +17,22 @@ const moviesSlice = createSlice({
         format: action.payload.format,
         actors: action.payload.actors
       };
-      return { ...state, movies: state.movies.push(newMovie), changed: true }
+      return { movies: state.movies.push(newMovie), changed: true, isLoading: false, errors: false }
     },
     importMovies: (state, action) => {
-      return { ...state, movies: action.payload.concat(state.movies), changed: true };
+      return { ...state, movies: action.payload.concat(state.movies), changed: true, errors: false };
     },
     replaceMovies: (state, action) => {
-      return { ...state, movies: action.payload };
+      return { ...state, movies: action.payload, isLoading: false, errors: false };
     },
     removeMovie: (state, action) => {
-      return { ...state, movies: state.movies.filter(movie => movie.id !== action.payload) }
+      return { ...state, movies: state.movies.filter(movie => movie.id !== action.payload), errors: false, changed: false }
     },
     setLoading: (state, action) => {
       return { ...state, isLoading: action.payload };
     },
     setError: (state, action) => {
-      return { ...state, errors: action.payload };
+      return { ...state, errors: action.payload, isLoading: false };
     },
   }
 });

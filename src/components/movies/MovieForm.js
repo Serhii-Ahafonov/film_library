@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
-import classes from './MovieForm.module.css';
+import { useSelector } from 'react-redux';
 import Card from '../ui/Card';
+import classes from './MovieForm.module.css';
 
-function MovieForm({ onAddMovie, onImport }) {
+function MovieForm({ onAddMovie }) {
+  const { errors } = useSelector((state) => state.allMovies);
   const titleRef = useRef(null);
   const yearRef = useRef(null);
   const formatRef = useRef(null);
@@ -10,9 +12,6 @@ function MovieForm({ onAddMovie, onImport }) {
 
   function addHandler(event) {
     event.preventDefault();
-
-    // could add validation here...
-
     const movie = {
       title: titleRef.current.value,
       year: yearRef.current.value,
@@ -28,21 +27,21 @@ function MovieForm({ onAddMovie, onImport }) {
     const formData = new FormData();
     formData.append("movies", file, file.name);
 
-    onImport(formData);
+    onAddMovie(formData, true);
   }
 
   return (
     <Card>
       <form className={classes.form} onSubmit={addHandler}>
-        <div className={classes.control}>
+        <div className={`${classes.control} ${errors.title ? classes.error : ''}`}>
           <label htmlFor='title'>Title</label>
           <input type='text' id='title' ref={titleRef}/>
         </div>
-        <div className={classes.control}>
-          <label htmlFor='release'>Release Year</label>
-          <input type='text' id='release' ref={yearRef}/>
+        <div className={`${classes.control} ${errors.year ? classes.error : ''}`}>
+          <label htmlFor='year'>Year</label>
+          <input type='text' id='year' ref={yearRef}/>
         </div>
-        <div className={classes.control}>
+        <div className={`${classes.control} ${errors.format ? classes.error : ''}`}>
           <label htmlFor='format'>Format</label>
           <input type='text' id='format' ref={formatRef}/>
         </div>
@@ -51,19 +50,13 @@ function MovieForm({ onAddMovie, onImport }) {
           <textarea rows='2' id='actors' ref={actorsRef}/>
         </div>
         <div className={classes.actions}>
+          <div className={classes.import}>
+            <label htmlFor="upload-movies">Import Movies...</label>
+            <input id="upload-movies" name="movies" type="file" accept=".txt" onChange={importHandler}/>
+          </div>
           <button>Add Movie</button>
         </div>
       </form>
-      <div className={classes.import}>
-        <label htmlFor="upload-movies">Import Movies...</label>
-        <input
-          id="upload-movies"
-          name="movies"
-          type="file"
-          accept=".txt"
-          onChange={importHandler}
-        />
-      </div>
     </Card>
   );
 }

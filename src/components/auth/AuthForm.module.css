@@ -31,31 +31,20 @@
 
 .control input:focus,
 .control textarea:focus {
-    background-color: #eaf0ff;
-    outline-color: #131e2a;
+    background-color: #ffeaea;
+    outline-color: #2a1313;
 }
 
 .actions {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    flex-direction: row;
     gap: 10px;
 }
 
-.import {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.import input {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
-}
-
-.import label {
-    padding: 0 8px ;
+.btn {
     color: white;
-    border-bottom: 2px solid white;
+    text-align: center;
     cursor: pointer;
 }

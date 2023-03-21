@@ -1,4 +1,4 @@
-import { setCookie, parseCookies } from 'nookies';
+import { setCookie, parseCookies, destroyCookie } from 'nookies';
 
 export function storeTokenInCookie(token) {
   setCookie(null, 'token', token, {
@@ -14,4 +14,8 @@ export function retrieveTokenFromCookie() {
   const token = cookies.token;
 
   return token;
+}
+
+export function removeTokenFromCookie() {
+  destroyCookie(null,'token');
 }
