@@ -18,10 +18,10 @@ export async function authenticate(mode, authData) {
   return token;
 }
 
-export function createUser(authData) {
+export function signUp(authData) {
   return authenticate('users', authData);
 }
 
-export function login(authData) {
+export function logIn(authData) {
   return authenticate('sessions', authData);
 }
