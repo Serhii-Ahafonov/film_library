@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { removeMovie } from '../../store/movies';
 import { deleteMovie } from '../../api/moviesApi';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import ErrorOverlay from '../UI/ErrorOverlay';
+
+import LoadingSpinner from '../ui/LoadingSpinner';
+import ErrorOverlay from '../ui/ErrorOverlay';
 import classes from './MovieItem.module.css';
 
 const MovieItem = (props) => {

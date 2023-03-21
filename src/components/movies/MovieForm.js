@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import classes from './MovieForm.module.css';
-import Card from '../UI/Card';
+import Card from '../ui/Card';
 
 function MovieForm({ onAddMovie, onImport }) {
   const titleRef = useRef(null);

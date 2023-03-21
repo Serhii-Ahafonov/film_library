@@ -4,25 +4,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  display: flex;
   flex-direction: column;
-  align-items: center;
   color: white;
 }
 
 .nomovies p {
   font-size: 3rem;
   font-weight: bold;
-}
-
-.nomovies input {
-  opacity: 0;
-  position: absolute;
-  z-index: -1;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
 }

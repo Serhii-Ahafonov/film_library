@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../UI/Card';
+import Card from '../ui/Card';
 import classes from './MovieDescription.module.css';
 
 const MovieDescription = ({title, year, format, actors}) => {

@@ -4,7 +4,7 @@ import { fetchMovies } from '../../api/moviesApi';
 
 import MovieItem from './MovieItem';
 import MovieFiltering from './MovieFiltering';
-import LoadingSpinner from '../UI/LoadingSpinner';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import classes from './MovieList.module.css';
 
 const MovieList = ({ movies }) => {
