@@ -24,10 +24,10 @@ function AuthForm({ isLogin, onSubmit }) {
       setInputs((currInputs) => {
         const prefix = isLogin ? '' : 'data/';
         return {
-          email: {value: currInputs.email.value, isValid: !errors[prefix+'email']},
-          name: {value: currInputs.name.value, isValid: !errors[prefix+'name']},
-          password: {value: currInputs.password.value, isValid: !errors[prefix+'password']},
-          confirmPassword: {value: currInputs.confirmPassword.value, isValid: !errors[prefix+'confirmPassword']}
+          email: {value: currInputs.email.value, isValid: !errors[prefix + 'email']},
+          name: {value: currInputs.name.value, isValid: !errors[prefix + 'name']},
+          password: {value: currInputs.password.value, isValid: !errors[prefix + 'password']},
+          confirmPassword: {value: currInputs.confirmPassword.value, isValid: !errors[prefix + 'confirmPassword']}
         };
       });
     }
