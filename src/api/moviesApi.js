@@ -21,9 +21,7 @@ export function fetchMovies(params) {
 
       const data = await response.json();
 
-      if (data.error) {
-        throw new Error(JSON.stringify(data.error))
-      }
+      if (data.error) throw (data.error);
 
       return data;
     }
@@ -32,8 +30,7 @@ export function fetchMovies(params) {
       const { data } = await fetchData();
       dispatch(replaceMovies(data));
     } catch (error) {
-      const errorObject = JSON.parse(error.message);
-      if (errorObject.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
+      if (error.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
     }
   };
 }
@@ -56,9 +53,7 @@ export function sendMovies(movies) {
 
       const data = await response.json();
 
-      if (data.error) {
-        throw new Error(JSON.stringify(data.error))
-      }
+      if (data.error) throw (data.error);
 
       return data;
     }
@@ -67,9 +62,7 @@ export function sendMovies(movies) {
       const { data } = await sendData();
       dispatch(addMovies(data));
     } catch (error) {
-      console.log(error)
-      const errorObject = JSON.parse(error);
-      if (errorObject.code === 'FORMAT_ERROR') dispatch(setError(errorObject.fields));
+      if (error.code === 'FORMAT_ERROR') dispatch(setError(error.fields));
     }
   };
 }
@@ -91,9 +84,7 @@ export function deleteMovie(id) {
 
       const data = await response.json();
 
-      if (data.error) {
-        throw new Error(JSON.stringify(data.error))
-      }
+      if (data.error) throw (data.error);
 
       return data;
     }
@@ -102,8 +93,7 @@ export function deleteMovie(id) {
       await sendData();
       dispatch(removeMovie(id));
     } catch (error) {
-      const errorObject = JSON.parse(error.message);
-      if (errorObject.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
+      if (error.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
     }
   };
 }

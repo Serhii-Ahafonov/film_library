@@ -23,7 +23,7 @@ const moviesSlice = createSlice({
       return { ...state, movies: action.payload.concat(state.movies), changed: true, errors: false };
     },
     replaceMovies: (state, action) => {
-      return { ...state, movies: action.payload, isLoading: false, errors: false };
+      return { movies: action.payload, isLoading: false, errors: false, changed: false };
     },
     removeMovie: (state, action) => {
       return { ...state, movies: state.movies.filter(movie => movie.id !== action.payload), errors: false, changed: false }
