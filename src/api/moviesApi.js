@@ -2,7 +2,7 @@ import { retrieveTokenFromCookie } from '../utils/cookies';
 import { importMovies, addMovies, replaceMovies, setLoading, removeMovie, setError } from '../store/movies';
 
 const token = retrieveTokenFromCookie();
-const url = 'http://localhost:8000/api/v1/movies';
+const url = process.env.API_URL + '/movies';
 
 export function fetchMovies(params) {
   return async dispatch => {

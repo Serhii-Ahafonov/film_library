@@ -1,7 +1,7 @@
 import { storeTokenInCookie } from '../utils/cookies';
 import { authActions } from '../store/auth';
 import { setLoading } from '../store/movies';
-const url = 'http://localhost:8000/api/v1/';
+const url = process.env.API_URL;
 
 export function authenticate(mode, authData) {
   return async dispatch => {
@@ -42,9 +42,9 @@ export function authenticate(mode, authData) {
 }
 
 export function signUp(authData) {
-  return authenticate('users', authData);
+  return authenticate('/users', authData);
 }
 
 export function logIn(authData) {
-  return authenticate('sessions', authData);
+  return authenticate('/sessions', authData);
 }

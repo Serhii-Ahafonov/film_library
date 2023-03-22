@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -14,7 +15,7 @@ module.exports = {
     static: {
       directory: path.resolve(__dirname, 'build'),
     },
-    port: 8080,
+    port: 3000,
     open: true,
     historyApiFallback: true
   },
@@ -23,6 +24,9 @@ module.exports = {
       template: 'public/index.html',
       filename: 'index.html',
       favicon: 'src/assets/favicon.ico'
+    }),
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify(process.env.API_URL)
     }),
     new MiniCssExtractPlugin(),
   ],
