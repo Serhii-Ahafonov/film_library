@@ -5,15 +5,16 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/auth';
 import { LOGIN_INPUTS, SIGNUP_INPUTS } from '../constants';
+import Input from '../ui/Input';
 
 function AuthForm({ isLogin, onSubmit }) {
+  const { errors } = useSelector((state) => state.auth);
   const [inputs, setInputs] = useState({
     email: { value: '', isValid: true },
     name: { value: '', isValid: true },
     password: { value: '', isValid: true },
     confirmPassword: { value: '', isValid: true }
   });
-  const { errors } = useSelector((state) => state.auth);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -62,10 +63,13 @@ function AuthForm({ isLogin, onSubmit }) {
       <form className={classes.form} onSubmit={submitHandler}>
         {
           Object.keys(INPUTS).map(key => (
-            <div key={key} className={`${classes.control} ${!inputs[key].isValid ? classes.error : ''}`}>
-              <label htmlFor={key}>{INPUTS[key].name}</label>
-              <input type={INPUTS[key].type} id={key} onChange={updateInputValueHandler.bind(this, key)}/>
-            </div>
+            <Input
+              name={key}
+              type={INPUTS[key].type}
+              title={INPUTS[key].name}
+              isValid={!inputs[key].isValid}
+              onChangeHandler={updateInputValueHandler}
+            />
           ))
         }
         <div className={classes.actions}>

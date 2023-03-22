@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { sendMovies, sendImportMovies } from '../../api/moviesApi';
 
 import MovieForm from '../../components/movies/MovieForm';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import { useDispatch, useSelector } from 'react-redux';
+import ErrorOverlay from '../../components/ui/ErrorOverlay';
 
 function NewMovie() {
-  const { changed, isLoading } = useSelector((state) => state.allMovies);
+  const { changed, isLoading, errors } = useSelector((state) => state.allMovies);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -22,7 +23,10 @@ function NewMovie() {
   if (isLoading) return <LoadingSpinner/>;
 
   return (
-    <MovieForm onAddMovie={addMoviesHandler}/>
+    <Fragment>
+      { errors && errors.message && <ErrorOverlay message={errors.message}/> }
+      <MovieForm onAddMovie={addMoviesHandler}/>
+    </Fragment>
   );
 }
 

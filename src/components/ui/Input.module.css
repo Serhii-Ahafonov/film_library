@@ -1,0 +1,33 @@
+.control {
+    margin-bottom: 0.5rem;
+}
+
+.control label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.control input {
+    font: inherit;
+    padding: 0.35rem;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    border: 1px solid #c1d1d1;
+    display: block;
+    width: 100%;
+    font-size: 1.25rem;
+    resize: none;
+}
+
+.control input:focus {
+    background-color: #eaf0ff;
+    outline-color: #131e2a;
+}
+
+.control.error input {
+    background-color: #faa7a7 !important;
+    outline-color: #750b0b !important;
+    border: 2px solid #faabab;
+}

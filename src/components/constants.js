@@ -27,3 +27,18 @@ export const SIGNUP_INPUTS = {
     type: 'password'
   },
 }
+
+export const ADD_MOVIE_INPUTS = {
+  title: {
+    name: 'Title',
+  },
+  year: {
+    name: 'Year',
+  },
+  format: {
+    name: 'Format',
+  },
+  actors: {
+    name: 'Actors',
+  },
+}

@@ -63,6 +63,7 @@ export function sendMovies(movies) {
       dispatch(addMovies(data));
     } catch (error) {
       if (error.code === 'FORMAT_ERROR') dispatch(setError(error.fields));
+      if (error.code === 'MOVIE_EXISTS') dispatch(setError({ message: 'Sorry this movie already exists!' }));
     }
   };
 }

@@ -1,11 +1,10 @@
 import { storeTokenInCookie } from '../utils/cookies';
 import { authActions } from '../store/auth';
-import { setLoading } from '../store/movies';
 const url = process.env.API_URL;
 
 export function authenticate(mode, authData) {
   return async dispatch => {
-    dispatch(setLoading(true));
+    dispatch(authActions.setLoading(true));
     const auth = async () => {
       const response = await fetch(url + mode, {
         method: 'POST',
