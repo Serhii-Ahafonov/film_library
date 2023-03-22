@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import classes from './AuthForm.module.css';
 import Card from '../ui/Card';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../store/auth';
 
 function AuthForm({ isLogin, onSubmit }) {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -11,6 +12,7 @@ function AuthForm({ isLogin, onSubmit }) {
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
   const { errors } = useSelector((state) => state.auth);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   function updateInputValueHandler(inputType, enteredValue) {
     const value = enteredValue.target.value;
@@ -40,13 +42,14 @@ function AuthForm({ isLogin, onSubmit }) {
     });
   };
 
-  function switchAuthModeHandler() {
+  const switchAuthModeHandler = () => {
+    dispatch(authActions.setError(false));
     if (isLogin) {
       history.push('signup');
     } else {
       history.push('login');
     }
-  }
+  };
 
   return (
     <Card>
