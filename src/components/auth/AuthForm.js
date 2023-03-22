@@ -19,7 +19,6 @@ function AuthForm({ isLogin, onSubmit }) {
 
   const INPUTS = isLogin ? LOGIN_INPUTS : SIGNUP_INPUTS;
 
-
   useEffect(() => {
     if (errors) {
       setInputs((currInputs) => {
