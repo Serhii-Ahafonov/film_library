@@ -64,6 +64,7 @@ function AuthForm({ isLogin, onSubmit }) {
         {
           Object.keys(INPUTS).map(key => (
             <Input
+              key={key}
               name={key}
               type={INPUTS[key].type}
               title={INPUTS[key].name}

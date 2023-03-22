@@ -15,7 +15,7 @@ function MovieDetails() {
 
   useLayoutEffect(() => {
     dispatch(fetchMovies(`/${movieId}`));
-  }, [])
+  }, [dispatch])
 
   if (isLoading) return <LoadingSpinner/>;
   if (errors) return <ErrorOverlay message={errors.message}/>;

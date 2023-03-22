@@ -17,12 +17,8 @@ function App() {
     <Provider store={store}>
       <MainPage>
         <Switch>
-          <Route path='/login' exact>
-            <Login/>
-          </Route>
-          <Route path='/signup' exact>
-            <SignUp/>
-          </Route>
+          <Route path='/login' exact component={Login}/>
+          <Route path='/signup' exact component={SignUp}/>
           <ProtectedRoute path='/' exact>
             <Redirect to='/movies' />
           </ProtectedRoute>

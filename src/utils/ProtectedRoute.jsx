@@ -4,7 +4,7 @@ import { retrieveTokenFromCookie } from './cookies';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../store/auth';
 
-export const ProtectedRoute = ({ children, path }) => {
+export const ProtectedRoute = ({ children, path, exact }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const token = retrieveTokenFromCookie();
   const dispatch = useDispatch();
@@ -14,6 +14,6 @@ export const ProtectedRoute = ({ children, path }) => {
   }
 
   return (
-    <Route path={path} render={() => isAuthenticated ? children : <Redirect to='/login' />} />
+    <Route exact={exact} path={path} render={() => isAuthenticated ? children : <Redirect to='/login' />} />
   );
 };

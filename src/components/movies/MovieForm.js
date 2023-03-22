@@ -42,6 +42,7 @@ function MovieForm({ onAddMovie }) {
         {
           Object.keys(ADD_MOVIE_INPUTS).map(key => (
             <Input
+              key={key}
               name={key}
               type={key}
               title={ADD_MOVIE_INPUTS[key].name}
