@@ -11,18 +11,13 @@ import MovieFiltering from '../../components/movies/MovieFiltering';
 
 function AllMovies() {
   const [searchValue, setSearchValue] = useState('');
-  const [error, setError] = useState();
-  const { movies, isLoading } = useSelector((state) => state.allMovies);
+  const { movies, isLoading, error } = useSelector((state) => state.allMovies);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
   const isSortingAscending = queryParams.get('order') === 'ASC';
-
-  useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
 
   useEffect(() => {
     if (searchValue.length > 1) {

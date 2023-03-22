@@ -22,3 +22,7 @@
   display: flex;
   gap: 16px;
 }
+
+.actions > * {
+  cursor: pointer;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownAZ, faArrowUpAZ, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FaSortAlphaDown, FaSortAlphaUp, FaSearch  } from 'react-icons/fa';
 import classes from './MovieFiltering.module.css';
 
 function MovieFiltering({onChange, isSortingAscending, value, onSearch}) {
@@ -8,8 +7,8 @@ function MovieFiltering({onChange, isSortingAscending, value, onSearch}) {
     <div className={classes.sorting}>
       <div onClick={onChange}>
         {isSortingAscending
-          ? <FontAwesomeIcon icon={faArrowUpAZ} size='2x' color='white'/>
-          : <FontAwesomeIcon icon={faArrowDownAZ} size='2x' color='white'/>
+          ? <FaSortAlphaUp size='24px' color='white'/>
+          : <FaSortAlphaDown  size='24px' color='white'/>
         }
       </div>
       <div className={classes.input}>
@@ -20,7 +19,7 @@ function MovieFiltering({onChange, isSortingAscending, value, onSearch}) {
           onChange={(e) => onSearch(e.target.value)}
         />
         <div className={classes.icon}>
-          <FontAwesomeIcon icon={faMagnifyingGlass}/>
+          <FaSearch size='24px'/>
         </div>
       </div>
     </div>
