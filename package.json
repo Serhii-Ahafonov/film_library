@@ -7,12 +7,10 @@
     "build": "webpack build --config webpack.config.js"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.1",
     "react-scripts": "5.0.1",
@@ -27,6 +25,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.5",
+    "nookies": "^2.5.2",
     "style-loader": "^3.3.2",
     "styled-components": "^5.3.9",
     "webpack": "^5.68.0",
