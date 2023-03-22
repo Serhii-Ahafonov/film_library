@@ -26,7 +26,7 @@ module.exports = {
       favicon: 'src/assets/favicon.ico'
     }),
     new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify('http://localhost:8000/api/v1')
+      'process.env.API_URL': JSON.stringify(process.env.API_URL)
     }),
     new MiniCssExtractPlugin(),
   ],
