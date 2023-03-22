@@ -25,7 +25,7 @@ export function authenticate(mode, authData) {
     }
 
     try {
-      const {token} = await auth();
+      const { token } = await auth();
       storeTokenInCookie(token);
       dispatch(authActions.login());
     } catch (error) {

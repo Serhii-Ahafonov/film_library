@@ -17,7 +17,7 @@ const moviesSlice = createSlice({
         format: action.payload.format,
         actors: action.payload.actors
       };
-      return { movies: state.movies.push(newMovie), changed: true, isLoading: false, errors: false }
+      return { movies: state.movies.concat(newMovie), isLoading: false, errors: false, changed: true }
     },
     importMovies: (state, action) => {
       return { ...state, movies: action.payload.concat(state.movies), changed: true, errors: false };

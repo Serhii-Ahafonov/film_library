@@ -1,7 +1,6 @@
 import { retrieveTokenFromCookie } from '../utils/cookies';
 import { importMovies, addMovies, replaceMovies, setLoading, removeMovie, setError } from '../store/movies';
 
-const token = retrieveTokenFromCookie();
 const url = process.env.API_URL + '/movies';
 
 export function fetchMovies(params) {
@@ -12,7 +11,7 @@ export function fetchMovies(params) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token,
+          'Authorization': retrieveTokenFromCookie(),
         }
       })
 
@@ -47,7 +46,7 @@ export function sendMovies(movies) {
         body: JSON.stringify(movies),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token,
+          'Authorization': retrieveTokenFromCookie(),
         }
       })
 
@@ -68,7 +67,8 @@ export function sendMovies(movies) {
       const { data } = await sendData();
       dispatch(addMovies(data));
     } catch (error) {
-      const errorObject = JSON.parse(error.message);
+      console.log(error)
+      const errorObject = JSON.parse(error);
       if (errorObject.code === 'FORMAT_ERROR') dispatch(setError(errorObject.fields));
     }
   };
@@ -81,7 +81,7 @@ export function deleteMovie(id) {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token,
+          'Authorization': retrieveTokenFromCookie(),
         }
       })
 
@@ -116,7 +116,7 @@ export function sendImportMovies(formData) {
         method: 'POST',
         body: formData,
         headers: {
-          'Authorization': token,
+          'Authorization': retrieveTokenFromCookie(),
         }
       })
 
