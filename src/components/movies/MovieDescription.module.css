@@ -8,17 +8,26 @@
     display: flex;
     flex-direction: row;
     color: white;
-    gap: 12px;
+    margin: 12px 0;
 }
 
 .section label {
     font-style: initial;
+    width: 120px;
 }
 
 .section div {
     font-weight: bold;
 }
 
+.section ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
 .section li {
+    width: max-content;
+    margin-right: 24px;
     list-style: none;
 }
