@@ -19,7 +19,7 @@ export function authenticate(mode, authData) {
 
       const data = await response.json();
 
-      if (data.error) throw new Error(JSON.stringify(data.error));
+      if (data.error) throw data.error;
 
       return data;
     }
@@ -29,14 +29,13 @@ export function authenticate(mode, authData) {
       storeTokenInCookie(token);
       dispatch(authActions.login());
     } catch (error) {
-      const errorObject = JSON.parse(error.message);
-      if (errorObject.code === 'EMAIL_NOT_UNIQUE') {
+      if (error.code === 'EMAIL_NOT_UNIQUE') {
         dispatch(authActions.setError({message: 'Sorry user is already registered, please try another email!'}));
       }
-      if (errorObject.code === 'AUTHENTICATION_FAILED') {
+      if (error.code === 'AUTHENTICATION_FAILED') {
         dispatch(authActions.setError({message: 'Email or password is incorrect!'}));
       }
-      if (errorObject.code === 'FORMAT_ERROR') dispatch(authActions.setError(errorObject.fields));
+      if (error.code === 'FORMAT_ERROR') dispatch(authActions.setError(error.fields));
     }
   };
 }

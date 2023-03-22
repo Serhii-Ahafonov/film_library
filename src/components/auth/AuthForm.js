@@ -1,78 +1,73 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './AuthForm.module.css';
 import Card from '../ui/Card';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/auth';
+import { LOGIN_INPUTS, SIGNUP_INPUTS } from '../constants';
 
 function AuthForm({ isLogin, onSubmit }) {
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
-  const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
+  const [inputs, setInputs] = useState({
+    email: { value: '', isValid: true },
+    name: { value: '', isValid: true },
+    password: { value: '', isValid: true },
+    confirmPassword: { value: '', isValid: true }
+  });
   const { errors } = useSelector((state) => state.auth);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  function updateInputValueHandler(inputType, enteredValue) {
-    const value = enteredValue.target.value;
-    switch (inputType) {
-      case 'email':
-        setEnteredEmail(value);
-        break;
-      case 'name':
-        setEnteredName(value);
-        break;
-      case 'password':
-        setEnteredPassword(value);
-        break;
-      case 'confirmPassword':
-        setEnteredConfirmPassword(value);
-        break;
+  const INPUTS = isLogin ? LOGIN_INPUTS : SIGNUP_INPUTS;
+
+
+  useEffect(() => {
+    if (errors) {
+      setInputs((currInputs) => {
+        const prefix = isLogin ? '' : 'data/';
+        return {
+          email: {value: currInputs.email.value, isValid: !errors[prefix+'email']},
+          name: {value: currInputs.name.value, isValid: !errors[prefix+'name']},
+          password: {value: currInputs.password.value, isValid: !errors[prefix+'password']},
+          confirmPassword: {value: currInputs.confirmPassword.value, isValid: !errors[prefix+'confirmPassword']}
+        };
+      });
     }
-  }
+  }, [errors]);
+
+  const updateInputValueHandler = (inputIdentifier, enteredValue) => {
+    setInputs((curInputs) => {
+      return {
+        ...curInputs,
+        [inputIdentifier]: { value: enteredValue.target.value, isValid: true }
+      };
+    });
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
     onSubmit({
-      email: enteredEmail,
-      name: enteredName,
-      password: enteredPassword,
-      confirmPassword: enteredConfirmPassword,
+      email: inputs.email.value,
+      name: inputs.name.value,
+      password: inputs.password.value,
+      confirmPassword: inputs.confirmPassword.value,
     });
   };
 
   const switchAuthModeHandler = () => {
     dispatch(authActions.setError(false));
-    if (isLogin) {
-      history.push('signup');
-    } else {
-      history.push('login');
-    }
+    history.push(isLogin ? 'signup' : 'login');
   };
 
   return (
     <Card>
       <form className={classes.form} onSubmit={submitHandler}>
-        <div className={`${classes.control} ${errors && errors['data/email'] ? classes.error : ''}`}>
-          <label htmlFor='email'>Email</label>
-          <input type='email' id='email' onChange={updateInputValueHandler.bind(this, 'email')}/>
-        </div>
-        { !isLogin &&
-          <div className={`${classes.control} ${errors && errors['data/name'] ? classes.error : ''}`}>
-            <label htmlFor='name'>Name</label>
-            <input type='text' id='name' onChange={updateInputValueHandler.bind(this, 'name')}/>
-          </div>
-        }
-        <div className={`${classes.control} ${errors && errors['data/password'] ? classes.error : ''}`}>
-          <label htmlFor='password'>Password</label>
-          <input type='password' id='password' onChange={updateInputValueHandler.bind(this, 'password')}/>
-        </div>
-        { !isLogin &&
-          <div className={`${classes.control} ${errors && errors['data/confirmPassword'] ? classes.error : ''}`}>
-            <label htmlFor='confirmPassword'>Confirm password</label>
-            <input type='password' id='confirmPassword' onChange={updateInputValueHandler.bind(this, 'confirmPassword')}/>
-          </div>
+        {
+          Object.keys(INPUTS).map(key => (
+            <div key={key} className={`${classes.control} ${!inputs[key].isValid ? classes.error : ''}`}>
+              <label htmlFor={key}>{INPUTS[key].name}</label>
+              <input type={INPUTS[key].type} id={key} onChange={updateInputValueHandler.bind(this, key)}/>
+            </div>
+          ))
         }
         <div className={classes.actions}>
           <div className={classes.btn} onClick={switchAuthModeHandler}>
