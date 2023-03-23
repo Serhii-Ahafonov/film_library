@@ -10,10 +10,10 @@ import Input from '../ui/Input';
 function AuthForm({ isLogin, onSubmit }) {
   const { errors } = useSelector((state) => state.auth);
   const [inputs, setInputs] = useState({
-    email: { value: '', isValid: true },
-    name: { value: '', isValid: true },
-    password: { value: '', isValid: true },
-    confirmPassword: { value: '', isValid: true }
+    email: { value: '', errorMessage: false },
+    name: { value: '', errorMessage: false },
+    password: { value: '', errorMessage: false },
+    confirmPassword: { value: '', errorMessage: false }
   });
   const history = useHistory();
   const dispatch = useDispatch();
@@ -25,10 +25,10 @@ function AuthForm({ isLogin, onSubmit }) {
       setInputs((currInputs) => {
         const prefix = isLogin ? '' : 'data/';
         return {
-          email: {value: currInputs.email.value, isValid: !errors[prefix + 'email']},
-          name: {value: currInputs.name.value, isValid: !errors[prefix + 'name']},
-          password: {value: currInputs.password.value, isValid: !errors[prefix + 'password']},
-          confirmPassword: {value: currInputs.confirmPassword.value, isValid: !errors[prefix + 'confirmPassword']}
+          email: {value: currInputs.email.value, errorMessage: errors[prefix + 'email']},
+          name: {value: currInputs.name.value, errorMessage: errors[prefix + 'name']},
+          password: {value: currInputs.password.value, errorMessage: errors[prefix + 'password']},
+          confirmPassword: {value: currInputs.confirmPassword.value, errorMessage: errors[prefix + 'confirmPassword']}
         };
       });
     }
@@ -38,7 +38,7 @@ function AuthForm({ isLogin, onSubmit }) {
     setInputs((curInputs) => {
       return {
         ...curInputs,
-        [inputIdentifier]: { value: enteredValue.target.value, isValid: true }
+        [inputIdentifier]: { value: enteredValue.target.value, errorMessage: false }
       };
     });
   };
@@ -68,7 +68,7 @@ function AuthForm({ isLogin, onSubmit }) {
               name={key}
               type={INPUTS[key].type}
               title={INPUTS[key].name}
-              isValid={!inputs[key].isValid}
+              errorMessage={inputs[key].errorMessage}
               onChangeHandler={updateInputValueHandler}
             />
           ))

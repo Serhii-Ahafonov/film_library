@@ -1,7 +1,7 @@
 import React from 'react';
-import classes from './Input.module.css';
+import classes from './Select.module.css';
 
-function Input({ name, type, title, onChangeHandler, errorMessage }) {
+function Select({ name, options, title, onChangeHandler, errorMessage }) {
   const className = `${classes.control} ${errorMessage ? classes.error : ''}`;
   const error = errorMessage && errorMessage.length && errorMessage.replaceAll('_', ' ').toLowerCase();
 
@@ -9,9 +9,12 @@ function Input({ name, type, title, onChangeHandler, errorMessage }) {
     <div className={className}>
       <label htmlFor={name}>{title}</label>
       { error && <span className={classes.errorMessage}>{`field ${error}`}</span> }
-      <input type={type} id={name} onChange={onChangeHandler.bind(this, name)}/>
+      <select onClick={onChangeHandler.bind(this, name)}>
+        <option value="" disabled selected hidden>Please select format...</option>
+        {options.map(option => <option value={option}>{option}</option>)}
+      </select>
     </div>
   )
 }
 
-export default Input;
+export default Select;
