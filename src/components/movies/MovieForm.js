@@ -5,10 +5,12 @@ import Card from '../ui/Card';
 import Input from '../ui/Input';
 import classes from './MovieForm.module.css';
 import Select from '../ui/Select';
+import { hasOnlyLettersWithDashComma, hasOnlySpaces } from '../../utils/regex';
 
 function MovieForm({ onAddMovie }) {
-  const { errors } = useSelector((state) => state.allMovies);
   const [inputs, setInputs] = useState({ title: '', year: '', format: '', actors: ''});
+  const [customErrors, setCustomErrors] = useState({});
+  const { errors } = useSelector((state) => state.allMovies);
 
   const updateInputValueHandler = (inputIdentifier, enteredValue) => {
     setInputs((curInputs) => {
@@ -29,11 +31,27 @@ function MovieForm({ onAddMovie }) {
 
   const addHandler = (event) => {
     event.preventDefault();
-    onAddMovie({
-      title: inputs.title,
-      year: inputs.year,
-      format: inputs.format,
-      actors: inputs.actors.split(','),
+
+    const isValidTitle = !hasOnlySpaces(inputs.title);
+    const isValidYear = !hasOnlySpaces(inputs.year);
+    const isValidFormat = !hasOnlySpaces(inputs.format);
+    const isValidActors = hasOnlyLettersWithDashComma(inputs.actors);
+    const isValidInputs = isValidTitle && isValidYear && isValidFormat && isValidActors;
+
+    if (isValidInputs) {
+      onAddMovie({
+        title: inputs.title,
+        year: inputs.year,
+        format: inputs.format,
+        actors: inputs.actors.split(','),
+      });
+    }
+
+    setCustomErrors( {
+      title: !isValidTitle && 'required',
+      year: !isValidYear && 'required',
+      format: !isValidFormat && 'required',
+      actors: !isValidActors && 'should not have special symbols like !#$%'
     });
   }
 
@@ -44,16 +62,16 @@ function MovieForm({ onAddMovie }) {
           Object.keys(ADD_MOVIE_INPUTS).map(key => {
             if (key === 'format') {
               return (
-                <Select title={key} name={key}
-                  options={['VHS', 'Blu-ray', 'DVD']}
-                  errorMessage={errors[key]}
+                <Select title={key} name={key} key={key}
+                  options={['VHS', 'Blu-Ray', 'DVD']}
+                  errorMessage={errors[key] || customErrors[key]}
                   onChangeHandler={updateInputValueHandler}/>
               );
             }
             return (
               <Input key={key} name={key} type={key}
                 title={ADD_MOVIE_INPUTS[key].name}
-                errorMessage={errors[key]}
+                errorMessage={errors[key] || customErrors[key]}
                 onChangeHandler={updateInputValueHandler}/>
             );
           })

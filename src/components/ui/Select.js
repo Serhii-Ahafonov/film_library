@@ -9,9 +9,9 @@ function Select({ name, options, title, onChangeHandler, errorMessage }) {
     <div className={className}>
       <label htmlFor={name}>{title}</label>
       { error && <span className={classes.errorMessage}>{`field ${error}`}</span> }
-      <select onClick={onChangeHandler.bind(this, name)}>
-        <option value="" disabled selected hidden>Please select format...</option>
-        {options.map(option => <option value={option}>{option}</option>)}
+      <select onChange={onChangeHandler.bind(this, name)}>
+        <option value="" disabled selected hidden>Please select option...</option>
+        {options.map(option => <option key={option} value={option}>{option}</option>)}
       </select>
     </div>
   )
