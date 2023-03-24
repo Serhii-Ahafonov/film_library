@@ -28,8 +28,8 @@ export function fetchMovies(params) {
     }
 
     try {
-      const { data } = await fetchData();
-      dispatch(replaceMovies(data));
+      const { data, meta } = await fetchData();
+      dispatch(replaceMovies({data, total: meta.total}));
     } catch (error) {
       if (error.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
     }
@@ -61,8 +61,8 @@ export function sendMovies(movies) {
     }
 
     try {
-      const { data } = await sendData();
-      dispatch(addMovies(data));
+      const { data, meta } = await sendData();
+      dispatch(addMovies({data, total: meta.total}));
       dispatch(setNotification('Movie was added successfully!'));
     } catch (error) {
       if (error.code === 'FORMAT_ERROR') dispatch(setError(error.fields));
@@ -123,8 +123,8 @@ export function sendImportMovies(formData) {
     }
 
     try {
-      const { data } = await sendData();
-      dispatch(importMovies(data));
+      const { data, meta } = await sendData();
+      dispatch(importMovies({data, total: meta.total}));
       dispatch(setNotification('Movies were added successfully!'))
     } catch (error) {
       dispatch(setError({message: error.message}));

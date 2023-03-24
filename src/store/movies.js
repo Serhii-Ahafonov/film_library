@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
-    movies: [],
+    movies: {data: [], total: 0},
     isLoading: false,
     errors: false,
     changed: false,
@@ -17,16 +17,16 @@ const moviesSlice = createSlice({
         format: action.payload.format,
         actors: action.payload.actors
       };
-      return { movies: state.movies.concat(newMovie), isLoading: false, errors: false, changed: true }
+      return { movies: {...state.movies, data: state.movies.data.concat(newMovie)}, isLoading: false, errors: false, changed: true }
     },
     importMovies: (state, action) => {
-      return { ...state, movies: action.payload.concat(state.movies), changed: true, errors: false };
+      return { ...state, movies: {...state.movies, data: action.payload.data.concat(state.movies.data)} , changed: true, errors: false };
     },
     replaceMovies: (state, action) => {
       return { movies: action.payload, isLoading: false, errors: false, changed: false };
     },
     removeMovie: (state, action) => {
-      return { ...state, movies: state.movies.filter(movie => movie.id !== action.payload), errors: false, changed: false }
+      return { ...state, movies: {data: state.movies.data.filter(movie => movie.id !== action.payload), total: state.movies.total - 1}, errors: false, changed: false }
     },
     setLoading: (state, action) => {
       return { ...state, isLoading: action.payload };

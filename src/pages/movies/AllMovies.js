@@ -9,6 +9,7 @@ import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import ErrorOverlay from '../../components/ui/ErrorOverlay';
 import MovieFiltering from '../../components/movies/MovieFiltering';
 import ConfirmModal from '../../components/ui/ConfirmModal';
+import Pagination from '../../components/movies/Pagination';
 
 function AllMovies() {
   const [deleteMovieId, setDeleteMovieId] = useState(false);
@@ -24,13 +25,13 @@ function AllMovies() {
   useLayoutEffect(() => {
     if (searchValue.length > 1) {
       const timer = setTimeout(() => {
-        const searchParams = `?search=${searchValue}`;
+        const searchParams = `?search=${searchValue}&limit=10`;
         dispatch(fetchMovies(searchParams));
         changePathParams(searchParams);
       }, 600);
       return () => clearTimeout(timer);
     } else {
-      dispatch(fetchMovies());
+      dispatch(fetchMovies('?limit=10'));
     }
   }, [searchValue]);
 
@@ -39,7 +40,7 @@ function AllMovies() {
   }
 
   const changeSortingHandler = async () => {
-    const sortParams = `?sort=title&order=${(isSortingAscending ? 'DESC': 'ASC')}`;
+    const sortParams = `?sort=title&limit=10&order=${(isSortingAscending ? 'DESC': 'ASC')}`;
 
     dispatch(fetchMovies(sortParams));
     changePathParams(sortParams);
@@ -67,6 +68,7 @@ function AllMovies() {
         value={searchValue}
       />
       <MovieList movies={movies} onConfirm={onConfirmHandler}/>
+      <Pagination total={movies.total}/>
       {deleteMovieId &&
         <ConfirmModal
           message='Do you want to delete this movie?'
