@@ -1,5 +1,6 @@
 import { retrieveTokenFromCookie } from '../utils/cookies';
 import { importMovies, addMovies, replaceMovies, setLoading, removeMovie, setError } from '../store/movies';
+import { setNotification } from '../store/notification';
 
 const url = process.env.API_URL + '/movies';
 
@@ -37,6 +38,7 @@ export function fetchMovies(params) {
 
 export function sendMovies(movies) {
   return async dispatch => {
+    dispatch(setNotification(false));
     const sendData = async () => {
       const response = await fetch(url, {
         method: 'POST',
@@ -61,6 +63,7 @@ export function sendMovies(movies) {
     try {
       const { data } = await sendData();
       dispatch(addMovies(data));
+      dispatch(setNotification('Movie was added successfully!'));
     } catch (error) {
       if (error.code === 'FORMAT_ERROR') dispatch(setError(error.fields));
       if (error.code === 'MOVIE_EXISTS') dispatch(setError({ message: 'Sorry this movie already exists!' }));
@@ -102,6 +105,7 @@ export function deleteMovie(id) {
 export function sendImportMovies(formData) {
   return async dispatch => {
     dispatch(setLoading(true));
+    dispatch(setNotification(false));
     const sendData = async () => {
       const response = await fetch(url + '/import', {
         method: 'POST',
@@ -121,6 +125,7 @@ export function sendImportMovies(formData) {
     try {
       const { data } = await sendData();
       dispatch(importMovies(data));
+      dispatch(setNotification('Movies were added successfully!'))
     } catch (error) {
       dispatch(setError({message: error.message}));
     }

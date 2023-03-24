@@ -2,16 +2,16 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import MainNavigation from './MainNavigation';
 import classes from './MainPage.module.css';
-import ErrorOverlay from '../ui/ErrorOverlay';
+import Notification from '../../utils/Notification';
 
 const MainPage = (props) => {
-  const { errors } = useSelector((state) => state.allMovies);
+  const { notification } = useSelector((state) => state.notification);
 
   return (
     <div className={classes.container}>
       <MainNavigation/>
-      {/*{errors && <ErrorOverlay message={errors}/>}*/}
       <div className={classes.content}>{props.children}</div>
+      {notification && <Notification message={notification}/>}
     </div>
   );
 };
