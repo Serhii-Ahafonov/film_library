@@ -21,7 +21,7 @@ function MovieDetails() {
   if (errors) return <ErrorOverlay message={errors.message}/>;
 
   return (
-    <MovieDescription {...movies}/>
+    <MovieDescription {...movies.data}/>
   );
 }
 

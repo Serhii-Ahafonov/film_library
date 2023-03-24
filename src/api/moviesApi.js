@@ -29,7 +29,7 @@ export function fetchMovies(params) {
 
     try {
       const { data, meta } = await fetchData();
-      dispatch(replaceMovies({data, total: meta.total}));
+      dispatch(replaceMovies({data, total: meta && meta.total}));
     } catch (error) {
       if (error.code === 'MOVIE_NOT_FOUND') dispatch(setError({message: 'Movie not found!'}));
     }
