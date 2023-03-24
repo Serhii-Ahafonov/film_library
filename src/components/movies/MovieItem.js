@@ -2,11 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AiOutlineMore, AiOutlineDelete  } from 'react-icons/ai';
-import { deleteMovie } from '../../api/moviesApi';
 import classes from './MovieItem.module.css';
 
-const MovieItem = ({ id, title }) => {
-  const dispatch = useDispatch();
+const MovieItem = ({ id, title, onConfirm }) => {
   const history = useHistory();
 
   const detailMovieHandler = () => {
@@ -14,7 +12,7 @@ const MovieItem = ({ id, title }) => {
   };
 
   const deleteMovieHandler = () => {
-    dispatch(deleteMovie(id));
+    onConfirm(id);
   };
 
   return (

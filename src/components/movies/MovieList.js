@@ -5,7 +5,7 @@ import MovieItem from './MovieItem';
 import LoadingSpinner from '../ui/LoadingSpinner';
 import classes from './MovieList.module.css';
 
-const MovieList = () => {
+const MovieList = ({ onConfirm }) => {
   const {movies, isLoading} = useSelector((state) => state.allMovies);
 
   if (isLoading) return <LoadingSpinner/>;
@@ -15,7 +15,7 @@ const MovieList = () => {
     movies.length > 0 &&
       <ul className={classes.list}>
         {movies.map((movie) => (
-          <MovieItem key={movie.id} id={movie.id} title={movie.title}/>
+          <MovieItem key={movie.id} id={movie.id} title={movie.title} onConfirm={onConfirm}/>
         ))}
       </ul>
   );
