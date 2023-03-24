@@ -62,7 +62,8 @@ function MovieForm({ onAddMovie }) {
           Object.keys(ADD_MOVIE_INPUTS).map(key => {
             if (key === 'format') {
               return (
-                <Select title={key} name={key} key={key}
+                <Select name={key} key={key}
+                  title={ADD_MOVIE_INPUTS[key].name}
                   options={['VHS', 'Blu-Ray', 'DVD']}
                   errorMessage={errors[key] || customErrors[key]}
                   onChangeHandler={updateInputValueHandler}/>
