@@ -55,7 +55,7 @@ function AllMovies() {
   }
 
   if (isLoading && !location.search) return <LoadingSpinner/>;
-  if (!movies || movies.length === 0 && !location.search) return <NoMoviesFound/>
+  if (!movies || movies.length === 0 && !location.search && !isLoading) return <NoMoviesFound/>
   if (error && !isLoading) return <ErrorOverlay message={error}/>
 
   return (
